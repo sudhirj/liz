@@ -10,7 +10,7 @@ Macho is specially built to work with [Hogan.js](http://twitter.github.com/hogan
 $ npm install macho -g
 $ macho <input_path> <output_file>
 ```
-For instance if you've got 
+For instance, if you've got 
 ####templates/users.html
 
     <template name="user.greeting">

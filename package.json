@@ -1,0 +1,41 @@
+{
+  "name": "macho",
+  "version": "0.0.1",
+  "preferGlobal": "true",
+  "author": "Sudhir Jonathan <contact.me@sudhirjonathan.com> (www.sudhirjonathan.com)",
+  "description": "A template aggregator and compiler for Hogan.js",
+  "bin": {
+    "macho": "./bin/macho"
+  },
+  "main": "./lib/macho",
+  "directories":{
+    "lib": ".",
+    "test": "./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sudhirj/macho.git"
+  },
+  "keywords": [
+    "hogan.js",
+    "templating",
+    "compiling"
+  ],
+  "dependencies": {
+    "glob" : "3.x",
+    "soupselect": "0.2.x",
+    "optimist": "0.3.x",
+    "simplesets": "1.2.x",
+    "hogan.js": "2.x",
+    "underscore": "1.3.x"
+  },
+  "devDependencies": {
+    "mocha": "1.x"
+  },
+  "license": "MIT",
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "homepage": "http://sudhirj.github.com/macho"
+}
