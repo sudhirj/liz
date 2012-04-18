@@ -1,20 +1,20 @@
 {
-  "name": "macho",
+  "name": "liz",
   "version": "0.0.1",
   "preferGlobal": "true",
   "author": "Sudhir Jonathan <contact.me@sudhirjonathan.com> (www.sudhirjonathan.com)",
   "description": "A template aggregator and compiler for Hogan.js",
   "bin": {
-    "macho": "./bin/macho"
+    "liz": "./bin/liz"
   },
-  "main": "./lib/macho",
+  "main": "./lib/liz",
   "directories":{
     "lib": ".",
     "test": "./test"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/sudhirj/macho.git"
+    "url": "git://github.com/sudhirj/liz.git"
   },
   "keywords": [
     "hogan.js",
