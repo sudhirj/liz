@@ -3,12 +3,12 @@ path = require 'path'
 assert = require 'assert'
 _ = require 'underscore'
 hogan = require 'hogan.js'
-
+util = require 'util'
 liz = require '../liz'
 
 describe 'liz', ->
     exampleDir =  path.join __dirname, 'example'
-    output = path.join exampleDir, 'templates.js'
+    output = path.join exampleDir, "templates#{new Date().toISOString()}.js"
     firstFile = path.join(exampleDir, 'templates1.html') 
     secondFile = path.join(exampleDir, 'subfolder/moretemplates.html')
     glob = '**/*.html'
@@ -73,7 +73,12 @@ describe 'liz', ->
     it 'should tie it all together', ->
         if path.existsSync output then fs.unlinkSync output
         liz.manage exampleDir, glob, output
-        assert path.existsSync output
+        assert path.existsSync output        
+        templates = require output        
+        assert.equal templates.third.template.render({three: '3'}), 'template 3'
+        assert.equal templates.second.template.render({two: '2'}), 'template 2'
+        assert.equal _.keys(templates.second).length, 1
+        if path.existsSync output then fs.unlinkSync output
         
 
         

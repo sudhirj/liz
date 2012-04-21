@@ -8,6 +8,8 @@ htmlparser = require 'htmlparser'
 hogan = require 'hogan.js'
 _ = require 'underscore'
 
+console.log 'Liz imported'
+
 module.exports.findMatching = findMatching = (basePath, pattern) ->
     glob.sync(pattern, {cwd: basePath}).map (file) -> path.join basePath, file
 
@@ -29,11 +31,10 @@ module.exports.createNamespaces = createNamespaces = (names) ->
     namespaces = new sets.Set []
 
     nameSet.each (name) ->        
-        name.split('.').reduce (ns, part) ->
+        ns = []
+        name.split('.').forEach (part) ->
             ns.push part            
             namespaces.add ns.join '.'
-            ns
-        , []
 
     namespaces.array().sort()
 
@@ -45,6 +46,22 @@ module.exports.buildFunctions = buildFunctions = (templates) ->
 
 module.exports.manage = manage = (base, parseGlob, outputFile) ->
     if path.existsSync outputFile then fs.unlinkSync outputFile
+    files = findMatching base, parseGlob
+
+    templateSets = files.map (file) -> buildFunctions extractTemplates file        
+    templates = _.extend {}, templateSets...
+    namespaces = createNamespaces _.keys templates
+
+    output = []
+    output.push "var hogan = require('hogan.js');"
+    
+    namespaces.forEach (ns) ->
+        fn = if _.has(templates, ns) then "(function(){var _t=new hogan.Template(#{templates[ns]});return{_t:_t,render:function(){return _t.render.apply(_t,arguments)}};})()" else "{}"
+        output.push "module.exports.#{ns} = #{fn};"
+
+    fs.writeFileSync outputFile, output.join('\n'), 'utf-8'
+    console.log "Built #{_.keys(templates).length} templates into #{outputFile}" 
+
 
 
     
