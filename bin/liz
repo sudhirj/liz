@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+liz = require('../liz');
+path = require('path');
+
+var argv = require('optimist')    
+    .usage('Manage your templates for Hogan.js.\n Usage: liz -b ./templates -g "**/*.html" -o ./templates.js')
+    .demand(['base', 'glob', 'output'])    
+    .alias('base', 'b')
+    .describe('base', 'Template base path')
+    .alias('glob', 'g')
+    .describe('glob', 'Glob to find templates with (make sure this is in quotes)')
+    .alias('output', 'o')
+    .describe('output', 'Output file')
+    .argv;
+
+base = path.resolve(argv.base);
+console.log(base);
+console.log(argv.glob);
+
+liz.manage(argv.base, argv.glob, argv.output);
