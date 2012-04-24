@@ -1,6 +1,6 @@
 #Template Management for Hogan.js
 
-Liz is a manger for [Hogan.js](http://twitter.github.com/hogan.js/) templates. lets you organize and manage your JS templates in any file and directory structure that you want - it then compiles all your templates into one compact executable JS file. 
+Liz is a manger for [Hogan.js](http://twitter.github.com/hogan.js/) templates that lets you organize and manage your JS templates in any file and directory structure that you want - it then compiles all your templates into one compact executable JS file. 
 
 Liz can also be adapted to help you with plain [Mustache](http://mustache.github.com/) (or any other) templating engine. It is similar to [`hulk`](https://github.com/twitter/hogan.js/blob/master/bin/hulk), except that you don't need to have one template per file. Liz also **namespaces** your temlates based so you can access them easily in code.  
 
