@@ -1,4 +1,4 @@
-glob = require 'glob'
+
 path = require 'path'
 select = require('soupselect').select
 u = require 'util'
@@ -7,9 +7,6 @@ sets = require 'simplesets'
 htmlparser = require 'htmlparser'
 hogan = require 'hogan.js'
 _ = require 'underscore'
-
-module.exports.findMatching = findMatching = (basePath, pattern) ->
-    glob.sync(pattern, {cwd: basePath}).map (file) -> path.join basePath, file
 
 module.exports.extractTemplates = extractTemplates = (file) ->        
     templates = {}
@@ -42,9 +39,8 @@ module.exports.buildFunctions = buildFunctions = (templates) ->
         container
     , {}
 
-module.exports.manage = manage = (base, parseGlob, outputFile) ->
-    if path.existsSync outputFile then fs.unlinkSync outputFile
-    files = findMatching base, parseGlob
+module.exports.manage = manage = (files, outputFile) ->
+    if path.existsSync outputFile then fs.unlinkSync outputFile    
 
     templateSets = files.map (file) -> buildFunctions extractTemplates file        
     templates = _.extend {}, templateSets...
@@ -56,7 +52,7 @@ module.exports.manage = manage = (base, parseGlob, outputFile) ->
     
     namespaces.forEach (ns) ->
         fn = if _.has(templates, ns) then "(function(){var _t=new hogan.Template(#{templates[ns]});return{_t:_t,render:function(){return _t.render.apply(_t,arguments)}};})()" else "{}"
-        output.push "module.exports.#{ns} = #{fn};"
+        output.push "exports.#{ns} = #{fn};"
     output.push ''
 
     fs.writeFileSync outputFile, output.join('\n'), 'utf-8'

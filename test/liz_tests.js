@@ -16,18 +16,12 @@ util = require('util');
 liz = require('../liz');
 
 describe('liz', function() {
-  var exampleDir, firstFile, glob, output, secondFile;
+  var exampleDir, firstFile, glob, outputFile, secondFile;
   exampleDir = path.join(__dirname, 'example');
-  output = path.join(exampleDir, "templates" + (new Date().toISOString()) + ".js");
+  outputFile = path.join(exampleDir, "templates" + (new Date().toISOString()) + ".js");
   firstFile = path.join(exampleDir, 'templates1.html');
   secondFile = path.join(exampleDir, 'subfolder/moretemplates.html');
   glob = '**/*.html';
-  it('should collect matching files on multiple levels', function() {
-    var files;
-    files = liz.findMatching(exampleDir, glob);
-    assert(_.contains(files, firstFile));
-    return assert(_.contains(files, secondFile));
-  });
   it('should collect templates from a file', function() {
     var keys, moreTemplates, templates;
     templates = liz.extractTemplates(firstFile);
@@ -66,12 +60,12 @@ describe('liz', function() {
   });
   return it('should tie it all together', function() {
     var templates;
-    if (path.existsSync(output)) {
-      fs.unlinkSync(output);
+    if (path.existsSync(outputFile)) {
+      fs.unlinkSync(outputFile);
     }
-    liz.manage(exampleDir, glob, output);
-    assert(path.existsSync(output));
-    templates = require(output);
+    liz.manage([firstFile, secondFile], outputFile);
+    assert(path.existsSync(outputFile));
+    templates = require(outputFile);
     assert.equal(templates.third.template.render({
       three: '3'
     }), 'template 3');
@@ -79,8 +73,8 @@ describe('liz', function() {
       two: '2'
     }), 'template 2');
     assert.equal(_.keys(templates.second).length, 1);
-    if (path.existsSync(output)) {
-      return fs.unlinkSync(output);
+    if (path.existsSync(outputFile)) {
+      return fs.unlinkSync(outputFile);
     }
   });
 });

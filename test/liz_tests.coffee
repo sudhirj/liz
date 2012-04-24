@@ -8,16 +8,11 @@ liz = require '../liz'
 
 describe 'liz', ->
     exampleDir =  path.join __dirname, 'example'
-    output = path.join exampleDir, "templates#{new Date().toISOString()}.js"
+    outputFile = path.join exampleDir, "templates#{new Date().toISOString()}.js"
     firstFile = path.join(exampleDir, 'templates1.html') 
     secondFile = path.join(exampleDir, 'subfolder/moretemplates.html')
     glob = '**/*.html'
-
-    it 'should collect matching files on multiple levels', ->                
-        files = liz.findMatching exampleDir, glob        
-
-        assert _.contains files, firstFile
-        assert _.contains files, secondFile
+    
 
     it 'should collect templates from a file', ->
         templates = liz.extractTemplates firstFile
@@ -71,14 +66,14 @@ describe 'liz', ->
         assert.equal 'bye bye love', t2.render {thing: 'love'}
 
     it 'should tie it all together', ->
-        if path.existsSync output then fs.unlinkSync output
-        liz.manage exampleDir, glob, output
-        assert path.existsSync output        
-        templates = require output        
+        if path.existsSync outputFile then fs.unlinkSync outputFile
+        liz.manage [firstFile, secondFile], outputFile
+        assert path.existsSync outputFile        
+        templates = require outputFile        
         assert.equal templates.third.template.render({three: '3'}), 'template 3'
         assert.equal templates.second.template.render({two: '2'}), 'template 2'
         assert.equal _.keys(templates.second).length, 1
-        if path.existsSync output then fs.unlinkSync output
+        if path.existsSync outputFile then fs.unlinkSync outputFile
         
 
         
