@@ -1,9 +1,9 @@
 {
   "name": "liz",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "preferGlobal": "true",
   "author": "Sudhir Jonathan <contact.me@sudhirjonathan.com> (www.sudhirjonathan.com)",
-  "description": "A template aggregator and compiler for Hogan.js",
+  "description": "A template manager compiler for Hogan.js",
   "bin": {
     "liz": "./bin/liz"
   },
@@ -38,5 +38,5 @@
   "engines": {
     "node": "*"
   },
-  "homepage": "http://sudhirj.github.com/macho"
+  "homepage": "http://sudhirj.github.com/liz"
 }
