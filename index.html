@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Liz by sudhirj</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Liz</h1>
+        <p>Template manager for Hogan.js</p>
+        <p class="view"><a href="https://github.com/sudhirj/liz">View the Project on GitHub <small>sudhirj/liz</small></a></p>
+        <ul>
+          <li><a href="https://github.com/sudhirj/liz/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/sudhirj/liz/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/sudhirj/liz">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Template Management for Hogan.js</h1>
+
+<p>Liz is a manger for <a href="http://twitter.github.com/hogan.js/">Hogan.js</a> templates that lets you organize and manage your JS templates in any file and directory structure that you want - it then compiles all your templates into one compact executable JS file. </p>
+
+<p>Liz can also be adapted to help you with plain <a href="http://mustache.github.com/">Mustache</a> (or any other) templating engine. It is similar to <a href="https://github.com/twitter/hogan.js/blob/master/bin/hulk"><code>hulk</code></a>, except that you don't need to have one template per file. Liz also <strong>namespaces</strong> your temlates based so you can access them easily in code.  </p>
+
+<h3>Usage</h3>
+
+<p>First do:</p>
+
+<pre><code>$ npm install liz -g
+$ liz &lt;input_files&gt; -o &lt;output_file&gt;
+</code></pre>
+
+<p>Then write your templates in <code>template</code> or <code>script</code> tags:</p>
+
+<pre><code>&lt;!--templates/users.html--&gt;
+
+&lt;template name="user.greeting"&gt;
+    &lt;p&gt;Hello, {{name}}&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script name="user.outro" type="text/x-mustache"&gt;
+    &lt;/p&gt;&lt;/div&gt;And that's the end of it.
+&lt;/script&gt;
+</code></pre>
+
+<p>Using <code>template</code> tags is usually easier - most editors will continue to give you HTML syntax highlighting and help. Or you can use <code>script</code> tags like <a href="http://ejohn.org/blog/javascript-micro-templating/">John Resig says</a>; especially when you're writing templates that don't validate as HTML.</p>
+
+<p>Then run:</p>
+
+<pre><code>$ liz templates/**/*.html -o templates.js
+</code></pre>
+
+<p>And you have:   </p>
+
+<pre><code>// templates.js 
+var hogan = require('hogan.js');
+exports.user = {};
+exports.user.greeting = new Hogan.Template(function(c,p,i){var _=this;_.b(i=i||"");_.b("&lt;p&gt;Hello, ");_.b(_.v(_.f("name",c,p,0)));_.b("&lt;/p&gt;");return _.fl();;});
+exports.user.outro = new Hogan.Template(function(c,p,i){var _=this;_.b(i=i||"");_.b("&lt;/p&gt;&lt;/div&gt;And that's the end of it.");return _.fl();;});
+</code></pre>
+
+<p>You can then render templates easily in your code:</p>
+
+<pre><code>templates = require('./templates');
+templates.user.greeting.render({name: 'Miss Elizabeth'});
+</code></pre>
+
+<h3>Roadmap</h3>
+
+<ul>
+<li>Browsers will work only if your project uses <a href="https://github.com/sstephenson/stitch">Stitch</a> or <a href="https://github.com/azer/onejs">OneJS</a> - change this so <code>require</code> and <code>exports</code> code can be turned off with a flag. </li>
+<li>Support for other templating engines. </li>
+</ul><h3>Contributions</h3>
+
+<p>Well tested (preferably TDD'd) contributions are welcome via pull requests. Personally Liz already fits all my needs - I'm using Hogan.js and <a href="https://github.com/sstephenson/stitch">Stitch</a> - so most of the roadmap will have to be driven by contributions. </p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/sudhirj">sudhirj</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-27684561-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
