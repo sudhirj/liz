@@ -63,7 +63,7 @@ module.exports.buildFunctions = buildFunctions = function(templates) {
 
 module.exports.manage = manage = function(files, outputFile) {
   var namespaces, output, templateSets, templates;
-  if (path.existsSync(outputFile)) {
+  if (fs.existsSync(outputFile)) {
     fs.unlinkSync(outputFile);
   }
   templateSets = files.map(function(file) {

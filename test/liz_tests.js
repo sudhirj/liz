@@ -60,11 +60,11 @@ describe('liz', function() {
   });
   return it('should tie it all together', function() {
     var templates;
-    if (path.existsSync(outputFile)) {
+    if (fs.existsSync(outputFile)) {
       fs.unlinkSync(outputFile);
     }
     liz.manage([firstFile, secondFile], outputFile);
-    assert(path.existsSync(outputFile));
+    assert(fs.existsSync(outputFile));
     templates = require(outputFile);
     assert.equal(templates.third.template.render({
       three: '3'
@@ -73,7 +73,7 @@ describe('liz', function() {
       two: '2'
     }), 'template 2');
     assert.equal(_.keys(templates.second).length, 1);
-    if (path.existsSync(outputFile)) {
+    if (fs.existsSync(outputFile)) {
       return fs.unlinkSync(outputFile);
     }
   });
